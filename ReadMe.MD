@@ -1,7 +1,7 @@
 # Simple C++ app using streamdata.io
 
 This is a sample application that shows how to use Streamdata.io in a C++ application. 
-Streamdata.io relies on two standard technologies : EventSource (https://www.w3.org/TR/eventsource/), and json-patch (http://jsonpatch.com/). 
+Streamdata.io relies on two standard technologies: EventSource (https://www.w3.org/TR/eventsource/), and json-patch (http://jsonpatch.com/). 
 This C++ implementation uses ChilKat (https://www.chilkatsoft.com/default.asp) as a C++ EventSource implementation (https://www.chilkatsoft.com/refdoc/vcCkServerSentEventRef.html), and JSON for Modern C++ (https://github.com/nlohmann/json) as a C++ json-patch implementation.
 
 ## Step by step setup
@@ -18,7 +18,7 @@ This C++ implementation uses ChilKat (https://www.chilkatsoft.com/default.asp) a
 
 You should see data and patches pushed in your application and displayed on your terminal.
 
-you can use the provided demo example API which simulates updating stocks prices from a financial market:
+You can use the provided demo example API which simulates updating stocks prices from a financial market:
 'http://stockmarket.streamdata.io/v2/prices'
 
 Feel free to test it with any REST/Json API of your choice.
