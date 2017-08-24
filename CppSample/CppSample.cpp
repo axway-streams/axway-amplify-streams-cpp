@@ -8,17 +8,15 @@ void main(void) {
 	//  Demonstrates how to begin receiving server-sent events, and to update
 	//  your JSON database for each event.
 
-	//  Put the streamdata token here.
-	const char *token = "YOUR TOKEN HERE";
 	//  Put the sample api here.
-	const char *apiUrl = "http://stockmarket.streamdata.io/v2/prices";
+	const char *apiUrl = "xGlobalCurrencies.json/GetRealTimeRates?_token=<token>&symbols=usdchf,audusd,gbpjpy,euraud,usdrub";
 
 	//  Init the ChilKat API.
 	initChilKat();
 
 	//  Init the connection with the Rest API.
 	CkRest rest;
-	initConnect(rest, token, apiUrl);
+	initConnect(rest, apiUrl);
 	
 	//  Now it's time to begin receiving the event stream.  
 	//  We'll start a background thread to read the stream. 
@@ -69,14 +67,14 @@ void initChilKat(void) {
 }
 
 //  Make the initial connection.
-void initConnect(CkRest& rest, const char *token, const char *apiUrl) {
-	bool success = rest.Connect("streamdata.motwin.net", 443, true, true);
+void initConnect(CkRest& rest, const char *apiUrl) {
+	bool success = rest.Connect("stream.xignite.com", 443, true, true);
 	if (success != true) {
 		std::cout << rest.lastErrorText() << std::endl;
 	}
 
 	CkString apiUrlCompl;
-	createUrl(rest, token, apiUrl, apiUrlCompl);
+	createUrl(rest, apiUrl, apiUrlCompl);
 
 	//  Send the request.  (We are only sending the request here.
 	//  We are not yet getting the response because the response
@@ -93,14 +91,7 @@ void initConnect(CkRest& rest, const char *token, const char *apiUrl) {
 }
 
 //  Create the Url needed.
-void createUrl(CkRest& rest, const char *token, const char *apiUrl, CkString& apiUrlCompl) {
-	//  Add the query parameter for the authentification
-	bool success = rest.AddQueryParam("X-Sd-Token", token);
-	if (success != true) {
-		std::cout << rest.lastErrorText() << std::endl;
-		return;
-	}
-
+void createUrl(CkRest& rest, const char *apiUrl, CkString& apiUrlCompl) {
 	rest.AddHeader("Accept", "text/event-stream");
 	rest.AddHeader("Cache-Control", "no-cache");
 
