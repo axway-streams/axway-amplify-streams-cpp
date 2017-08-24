@@ -42,7 +42,7 @@ void main(void) {
 		}
 		else {
 			//  We have an event. Let's update our local copy of the JSON.
-			streamLoop(sse, jData, eventStr);
+			streamLoop(sse, jData, eventStr, task);
 		}
 	}
 
@@ -136,7 +136,7 @@ void checkConnect(CkRest& rest) {
 }
 
 //  Update the JSON depending on the event
-void streamLoop(CkServerSentEvent& sse, json& jData, const char *eventStr) {
+void streamLoop(CkServerSentEvent& sse, json& jData, const char *eventStr, CkTask *task) {
 	bool success = sse.LoadEvent(eventStr);
 	if (success != true) {
 		std::cout << "Failed to load sse event: " << eventStr << std::endl;
@@ -161,6 +161,7 @@ void streamLoop(CkServerSentEvent& sse, json& jData, const char *eventStr) {
 			}
 			else if (evName.equals("error")) {
 				std::cout << "Event error: " << evData.getString() << std::endl << std::endl;
+				task->Cancel();
 			}
 		}
 		else {
